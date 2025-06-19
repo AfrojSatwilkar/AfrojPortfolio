@@ -25,7 +25,7 @@ const CustomCursor: React.FC = () => {
     let outlineY = 0;
     let animationFrameId: number;
 
-    const LERP_FACTOR = 0.2; // Increased for a snappier feel
+    const LERP_FACTOR = 0.15; // Reduced for smoother movement
 
     const handleMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX;
@@ -49,19 +49,17 @@ const CustomCursor: React.FC = () => {
     document.addEventListener('mouseover', handleMouseOver);
 
     const animate = () => {
-      // Animate dot
+      // Use transform instead of left/top for better performance
       if (cursorDotRef.current) {
-        cursorDotRef.current.style.left = `${mouseX}px`;
-        cursorDotRef.current.style.top = `${mouseY}px`;
+        cursorDotRef.current.style.transform = `translate(${mouseX - 3}px, ${mouseY - 3}px)`;
       }
 
-      // Animate outline
+      // Animate outline with smoother interpolation
       outlineX += (mouseX - outlineX) * LERP_FACTOR;
       outlineY += (mouseY - outlineY) * LERP_FACTOR;
       
       if (cursorOutlineRef.current) {
-        cursorOutlineRef.current.style.left = `${outlineX}px`;
-        cursorOutlineRef.current.style.top = `${outlineY}px`;
+        cursorOutlineRef.current.style.transform = `translate(${outlineX - 15}px, ${outlineY - 15}px)`;
       }
 
       animationFrameId = requestAnimationFrame(animate);
@@ -89,23 +87,21 @@ const CustomCursor: React.FC = () => {
     <>
     <div
         ref={cursorDotRef}
-        className="fixed rounded-full pointer-events-none z-[9999]"
+        className="fixed rounded-full pointer-events-none z-[9999] will-change-transform"
         style={{
           width: dotSize,
           height: dotSize,
           backgroundColor: outlineColor,
-          transform: 'translate(-50%, -50%)',
           transition: 'width 0.2s ease-out, height 0.2s ease-out, background-color 0.2s ease-out',
         }}
       />
       <div
         ref={cursorOutlineRef}
-        className="fixed rounded-full pointer-events-none z-[9999]"
+        className="fixed rounded-full pointer-events-none z-[9999] will-change-transform"
       style={{
           width: outlineSize,
           height: outlineSize,
           border: `2px solid ${outlineColor}`,
-          transform: 'translate(-50%, -50%)',
           opacity: isHoveringLink ? 0.5 : 1,
           transition: 'width 0.3s ease-out, height 0.3s ease-out, opacity 0.3s ease-out, border-color 0.3s ease-out',
       }}

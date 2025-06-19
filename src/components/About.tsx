@@ -35,29 +35,63 @@ const About = () => {
             className="lg:col-span-2 flex justify-center items-center"
             variants={fadeIn}
           >
-            <motion.div 
-              className="relative w-[300px] h-[300px] lg:w-[350px] lg:h-[350px] rounded-full overflow-hidden border-4 border-cyan-400/50"
-              animate={{
-                boxShadow: [
-                  "0 0 20px rgba(6, 182, 212, 0.4)",
-                  "0 0 35px rgba(6, 182, 212, 0.2)",
-                  "0 0 20px rgba(6, 182, 212, 0.4)",
-                ]
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            >
-              <Image
-                src="/placeholder-avatar.jpg" // Placeholder image
-                alt="Afroj Satwilkar"
-                layout="fill"
-                objectFit="cover"
-                className="scale-105"
-              />
-            </motion.div>
+            <div className="relative">
+              {/* Background geometric shapes */}
+              <div className="absolute -top-4 -left-4 w-24 h-24 bg-gradient-to-br from-cyan-400/20 to-blue-500/20 rounded-2xl rotate-12 blur-sm"></div>
+              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-gradient-to-tl from-purple-500/20 to-cyan-400/20 rounded-full blur-md"></div>
+              
+              {/* Main image container */}
+              <motion.div 
+                className="relative w-[350px] h-[450px] lg:w-[350px] lg:h-[400px] overflow-hidden bg-gradient-to-br from-cyan-400/10 to-purple-500/10 backdrop-blur-sm"
+                style={{
+                  borderRadius: "2rem 0.5rem 2rem 0.5rem",
+                  border: "2px solid transparent",
+                  backgroundImage: "linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(147, 51, 234, 0.3))",
+                  backgroundClip: "padding-box",
+                }}
+                animate={{
+                  boxShadow: [
+                    "0 8px 32px rgba(6, 182, 212, 0.3), 0 0 0 1px rgba(6, 182, 212, 0.2)",
+                    "0 12px 40px rgba(147, 51, 234, 0.3), 0 0 0 1px rgba(147, 51, 234, 0.2)",
+                    "0 8px 32px rgba(6, 182, 212, 0.3), 0 0 0 1px rgba(6, 182, 212, 0.2)",
+                  ],
+                  y: [0, -5, 0],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                whileHover={{
+                  scale: 1.02,
+                  rotate: 1,
+                  transition: { duration: 0.3 }
+                }}
+              >
+                {/* Gradient border overlay */}
+                <div 
+                  className="absolute inset-0 rounded-[2rem_0.5rem_2rem_0.5rem] p-[2px]"
+                  style={{
+                    background: "linear-gradient(135deg, #06b6d4, #9333ea, #06b6d4)",
+                  }}
+                >
+                  <div 
+                    className="w-full h-full rounded-[calc(2rem-2px)_calc(0.5rem-2px)_calc(2rem-2px)_calc(0.5rem-2px)] overflow-hidden"
+                  >
+                    <Image
+                      src="/images/pImg.jpg" // Placeholder image
+                      alt="Afroj Satwilkar"
+                      layout="fill"
+                      objectFit="cover"
+                      className="scale-105 transition-transform duration-700 hover:scale-110"
+                    />
+                  </div>
+                </div>
+                
+                {/* Shine effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+              </motion.div>
+            </div>
           </motion.div>
 
           {/* Right Column: Text Content */}
